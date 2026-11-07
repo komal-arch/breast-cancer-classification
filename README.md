@@ -1,7 +1,10 @@
-# ML Assignment 2 - Classification Model Comparison with Streamlit
+# ML Assignment 2
 
-**Student:** Komal Kumari (2026ak05718)
-**Programme:** M.Tech (AIML), BITS Pilani WILP
+| | |
+|---|---|
+| Name | Komal Kumari |
+| BITS ID | 2026ak05718 |
+| Programme | M.Tech (AIML), BITS Pilani WILP |
 
 ## a. Problem Statement
 
