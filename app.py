@@ -2,17 +2,12 @@
 import json
 
 import joblib
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
-import seaborn as sns
 import streamlit as st
 from sklearn.metrics import (
     accuracy_score, confusion_matrix, classification_report,
     f1_score, matthews_corrcoef, precision_score, recall_score, roc_auc_score,
 )
-
-st.set_page_config(page_title="Breast Cancer Classifier", layout="wide")
 
 
 @st.cache_resource
@@ -34,27 +29,13 @@ scaled_models = set(meta["scaled_models"])
 model_files = meta["model_files"]
 
 st.title("Breast Cancer Classifier")
-st.write(
-    "This is a small app I built for my ML assignment. I trained five "
-    "different classification models on the same breast cancer dataset, "
-    "and here you can try each one out on test data and compare how they do. "
-    "Nothing is being retrained on this page, the models were trained "
-    "beforehand and are just loaded here."
-)
 
-st.sidebar.header("1. Upload test data")
-uploaded_file = st.sidebar.file_uploader("Test data CSV", type=["csv"])
-
-st.sidebar.header("2. Pick a model")
-model_name = st.sidebar.selectbox("Model", list(model_files.keys()))
+uploaded_file = st.file_uploader("Upload test data CSV", type=["csv"])
+model_name = st.selectbox("Pick a model", list(model_files.keys()))
 
 if uploaded_file is None:
-    st.info("Upload a CSV with the 30 breast-cancer features and a `target` "
-             "column (0 for malignant, 1 for benign) to see it in action. "
-             "If you don't have one handy, there's a `test_data.csv` file "
-             "in the repo you can use.")
-    st.subheader("Columns it expects")
-    st.code(", ".join(feature_names + ["target"]))
+    st.info("Upload a CSV with the features and a `target` column "
+             "(or use `test_data.csv` from the repo).")
 else:
     df = pd.read_csv(uploaded_file)
 
@@ -81,37 +62,24 @@ else:
         mcc = matthews_corrcoef(y_true, y_pred)
 
         st.subheader(f"{model_name} results")
-        m1, m2, m3, m4, m5, m6 = st.columns(6)
-        m1.metric("Accuracy", f"{accuracy:.4f}")
-        m2.metric("AUC", f"{auc:.4f}")
-        m3.metric("Precision", f"{precision:.4f}")
-        m4.metric("Recall", f"{recall:.4f}")
-        m5.metric("F1 Score", f"{f1:.4f}")
-        m6.metric("MCC", f"{mcc:.4f}")
+        st.write(f"Accuracy: {accuracy:.4f}")
+        st.write(f"AUC: {auc:.4f}")
+        st.write(f"Precision: {precision:.4f}")
+        st.write(f"Recall: {recall:.4f}")
+        st.write(f"F1 Score: {f1:.4f}")
+        st.write(f"MCC: {mcc:.4f}")
 
-        col_left, col_right = st.columns(2)
+        st.write("Confusion matrix:")
+        cm = confusion_matrix(y_true, y_pred)
+        st.dataframe(pd.DataFrame(cm, index=target_names, columns=target_names))
 
-        with col_left:
-            st.markdown("**Confusion matrix**")
-            cm = confusion_matrix(y_true, y_pred)
-            fig, ax = plt.subplots()
-            sns.heatmap(
-                cm, annot=True, fmt="d", cmap="Blues",
-                xticklabels=target_names, yticklabels=target_names, ax=ax,
-            )
-            ax.set_xlabel("Predicted")
-            ax.set_ylabel("Actual")
-            st.pyplot(fig)
+        st.write("Classification report:")
+        report = classification_report(
+            y_true, y_pred, target_names=target_names, output_dict=True
+        )
+        st.dataframe(pd.DataFrame(report).transpose().round(4))
 
-        with col_right:
-            st.markdown("**Classification report**")
-            report = classification_report(
-                y_true, y_pred, target_names=target_names, output_dict=True
-            )
-            st.dataframe(pd.DataFrame(report).transpose().round(4))
+        st.write("Uploaded data (first 5 rows):")
+        st.dataframe(df.head())
 
-        with st.expander("See the data I uploaded"):
-            st.dataframe(df.head())
-
-st.sidebar.markdown("---")
-st.sidebar.caption("Komal Kumari (2026ak05718) - ML Assignment 2")
+st.caption("Komal Kumari (2026ak05718) - ML Assignment 2")
