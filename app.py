@@ -33,6 +33,11 @@ model_files = meta["model_files"]
 
 st.title("Breast Cancer Classifier")
 
+st.table(pd.DataFrame({
+    "": ["Name", "BITS ID", "Programme"],
+    " ": ["Komal Kumari", "2026ak05718", "M.Tech (AIML), BITS Pilani WILP"],
+}).set_index(""))
+
 with st.container(border=True):
     st.subheader("Input")
     uploaded_file = st.file_uploader("Upload test data CSV", type=["csv"])
