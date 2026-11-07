@@ -5,16 +5,17 @@
 
 ## a. Problem Statement
 
-The goal of this assignment is to train a few different classification
-models on the same dataset, check how well each one performs, and then put
-them behind a simple Streamlit app so anyone can upload test data, pick a
-model and see the results without having to retrain anything.
+For this assignment I had to train a few different classification models on
+the same dataset, see how each one performs, and then wrap them in a
+Streamlit app so someone can upload test data, pick a model, and see the
+results without needing to retrain anything.
 
 ## b. Dataset Description
 
-**Dataset used:** Breast Cancer Wisconsin (Diagnostic) Dataset, loaded from
-`sklearn.datasets.load_breast_cancer` (originally from the UCI Machine
-Learning Repository).
+**Dataset used:** Breast Cancer Wisconsin (Diagnostic) Dataset. I loaded it
+straight from `sklearn.datasets.load_breast_cancer` instead of downloading a
+CSV - it's the same dataset, originally from the UCI Machine Learning
+Repository, just bundled with scikit-learn.
 
 - **Task:** Binary classification - predict if a tumor is **malignant** or
   **benign**.
@@ -64,34 +65,25 @@ below are calculated on the held-out test set.
 
 ## Streamlit App
 
-- **Live app:** https://2026ak05718-breast-cancer-classification.streamlit.app/
-- **What it does:**
-  1. Lets you upload a test CSV (the 30 features plus a `target` column).
-  2. Lets you pick which of the 5 trained models to use from a dropdown.
-  3. Shows all 6 metrics for that model on your uploaded data.
-  4. Shows a confusion matrix and the full classification report.
-- The app only loads the already-trained models from `model/` and the saved
-  `StandardScaler` - it does not retrain anything on the data you upload.
+**Live app:** https://2026ak05718-breast-cancer-classification.streamlit.app/
 
-## Repository Structure
+What it lets you do:
+1. Upload a test CSV (the 30 features plus a `target` column).
+2. Pick which of the 5 trained models to use from a dropdown.
+3. See all 6 metrics for that model on your uploaded data.
+4. See a confusion matrix and the full classification report.
 
-```
-ml_assignment_2/
-├── app.py                      # the Streamlit app
-├── train.py                    # trains all 5 models, saves them + test_data.csv
-├── requirements.txt
-├── README.md
-├── test_data.csv               # held-out test rows, ready to upload into the app
-├── model_comparison.csv        # metrics table (raw numbers)
-└── model/
-    ├── logistic_regression.joblib
-    ├── decision_tree.joblib
-    ├── knn.joblib
-    ├── naive_bayes.joblib
-    ├── support_vector_machine.joblib
-    ├── scaler.joblib
-    └── meta.json
-```
+It only loads the already-trained models from `model/` and the saved
+`StandardScaler` - nothing gets retrained on whatever you upload.
+
+## What's in This Repo
+
+- `app.py` - the Streamlit app
+- `train.py` - trains all 5 models and saves them, plus `test_data.csv`
+- `requirements.txt` - packages needed to run everything
+- `test_data.csv` - held-out test rows, ready to upload into the app
+- `model_comparison.csv` - the raw metrics table
+- `model/` - the saved models (`.joblib` files), the scaler, and `meta.json`
 
 ## Running It Locally
 
