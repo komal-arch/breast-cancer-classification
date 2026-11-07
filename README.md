@@ -64,7 +64,7 @@ below are calculated on the held-out test set.
 
 ## Streamlit App
 
-- **Live app:** `<ADD_YOUR_STREAMLIT_CLOUD_URL_HERE>`
+- **Live app:** https://2026ak05718-breast-cancer-classification.streamlit.app/
 - **What it does:**
   1. Lets you upload a test CSV (the 30 features plus a `target` column).
   2. Lets you pick which of the 5 trained models to use from a dropdown.
