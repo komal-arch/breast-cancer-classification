@@ -33,7 +33,7 @@ Learning Repository).
 
 ## c. GitHub Repository Link
 
-`<ADD_YOUR_GITHUB_REPO_URL_HERE>`
+https://github.com/komal-arch/breast-cancer-classification
 
 ## d. Models Used
 
