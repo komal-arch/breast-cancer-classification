@@ -10,7 +10,17 @@ from sklearn.metrics import (
 )
 
 METRIC_ORDER = ["Accuracy", "AUC", "Precision", "Recall", "F1", "MCC"]
+METRIC_INFO = {
+    "Accuracy": "How many predictions it got right, out of all of them",
+    "AUC": "How good the model is at telling malignant and benign apart",
+    "Precision": "When it says malignant, how often that's actually true",
+    "Recall": "Out of all the real malignant cases, how many it found",
+    "F1": "One number that balances precision and recall",
+    "MCC": "One number for how good the predictions are overall, even if one class has way more cases than the other",
+}
 CMAP = "Blues"
+
+st.set_page_config(page_title="Breast Cancer Classifier", layout="wide")
 
 
 @st.cache_resource
@@ -79,31 +89,40 @@ if uploaded_file is not None:
         with st.container(border=True):
             st.subheader(f"{model_name} Results")
 
-            metrics_df = pd.DataFrame([metrics_row])[METRIC_ORDER]
+            metrics_df = pd.DataFrame({
+                "Metric": METRIC_ORDER,
+                "Value": [metrics_row[m] for m in METRIC_ORDER],
+            }).set_index("Metric")
             st.dataframe(
-                metrics_df.style.format("{:.4f}").background_gradient(cmap=CMAP, axis=1),
-                hide_index=True,
+                metrics_df.style.format("{:.4f}").background_gradient(cmap=CMAP),
                 use_container_width=True,
             )
+            with st.expander("What do these metrics mean?"):
+                for m in METRIC_ORDER:
+                    st.write(f"**{m}** - {METRIC_INFO[m]}")
 
-            st.write("Confusion matrix")
-            cm = confusion_matrix(y_true, y_pred)
-            cm_df = pd.DataFrame(cm, index=target_names, columns=target_names)
-            st.dataframe(
-                cm_df.style.background_gradient(cmap=CMAP, axis=None),
-                use_container_width=True,
-            )
+            st.divider()
 
-            st.write("Classification report")
-            report = classification_report(
-                y_true, y_pred, target_names=target_names, output_dict=True
-            )
-            report_df = pd.DataFrame(report).transpose().round(4)
-            st.dataframe(
-                report_df.style.background_gradient(
-                    cmap=CMAP, subset=["precision", "recall", "f1-score"]
-                ),
-                use_container_width=True,
-            )
+            col_left, col_right = st.columns(2)
 
-st.caption("Komal Kumari (2026ak05718) - ML Assignment 2")
+            with col_left:
+                st.write("Confusion matrix")
+                cm = confusion_matrix(y_true, y_pred)
+                cm_df = pd.DataFrame(cm, index=target_names, columns=target_names)
+                st.dataframe(
+                    cm_df.style.background_gradient(cmap=CMAP, axis=None),
+                    use_container_width=True,
+                )
+
+            with col_right:
+                st.write("Classification report")
+                report = classification_report(
+                    y_true, y_pred, target_names=target_names, output_dict=True
+                )
+                report_df = pd.DataFrame(report).transpose().round(4)
+                st.dataframe(
+                    report_df.style.background_gradient(
+                        cmap=CMAP, subset=["precision", "recall", "f1-score"]
+                    ),
+                    use_container_width=True,
+                )
