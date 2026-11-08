@@ -33,10 +33,12 @@ model_files = meta["model_files"]
 
 st.title("Breast Cancer Classifier")
 
-st.table(pd.DataFrame({
-    "": ["Name", "BITS ID", "Programme"],
-    " ": ["Komal Kumari", "2026ak05718", "M.Tech (AIML), BITS Pilani WILP"],
-}).set_index(""))
+st.caption("M.Tech (AIML), BITS Pilani WILP")
+info_df = pd.DataFrame({
+    "Field": ["Name", "BITS ID", "Assignment"],
+    "Value": ["Komal Kumari", "2026ak05718", "ML Assignment 2"],
+}).set_index("Field")
+st.table(info_df)
 
 with st.container(border=True):
     st.subheader("Input")
