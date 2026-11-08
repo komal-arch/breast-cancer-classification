@@ -44,11 +44,22 @@ model_files = meta["model_files"]
 st.title("Breast Cancer Classifier")
 
 st.caption("M.Tech (AIML), BITS Pilani WILP")
-info_df = pd.DataFrame({
-    "Field": ["Name", "BITS ID", "Assignment"],
-    "Value": ["Komal Kumari", "2026ak05718", "ML Assignment 2"],
-}).set_index("Field")
-st.table(info_df)
+info_rows = [
+    ("Name", "Komal Kumari"),
+    ("BITS ID", "2026ak05718"),
+    ("Assignment", "ML Assignment 2"),
+]
+rows_html = "".join(
+    f"<tr style='border-bottom:1px solid #e6e6e6;'>"
+    f"<td style='padding:6px 12px; color:#666;'>{field}</td>"
+    f"<td style='padding:6px 12px;'>{value}</td></tr>"
+    for field, value in info_rows
+)
+st.markdown(
+    f"<table style='width:420px; max-width:100%; margin:8px 24px; "
+    f"border-collapse:collapse; font-size:14px;'>{rows_html}</table>",
+    unsafe_allow_html=True,
+)
 
 with st.container(border=True):
     st.subheader("Input")
