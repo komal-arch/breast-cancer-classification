@@ -111,7 +111,8 @@ if uploaded_file is not None:
             }).set_index("Metric")
             st.dataframe(
                 metrics_df.style.format("{:.4f}").background_gradient(cmap=CMAP),
-                use_container_width=True,
+                use_container_width=False,
+                column_config={"Value": st.column_config.NumberColumn(width="small")},
             )
             with st.expander("What do these metrics mean?"):
                 for m in METRIC_ORDER:
