@@ -105,18 +105,23 @@ if uploaded_file is not None:
         with st.container(border=True):
             st.subheader(f"{model_name} Results")
 
-            metrics_df = pd.DataFrame({
-                "Metric": METRIC_ORDER,
-                "Value": [metrics_row[m] for m in METRIC_ORDER],
-            }).set_index("Metric")
-            st.dataframe(
-                metrics_df.style.format("{:.4f}").background_gradient(cmap=CMAP),
-                use_container_width=False,
-                column_config={"Value": st.column_config.NumberColumn(width="small")},
-            )
-            with st.expander("What do these metrics mean?"):
-                for m in METRIC_ORDER:
-                    st.write(f"**{m}** - {METRIC_INFO[m]}")
+            metrics_col, info_col = st.columns([1, 2])
+
+            with metrics_col:
+                metrics_df = pd.DataFrame({
+                    "Metric": METRIC_ORDER,
+                    "Value": [metrics_row[m] for m in METRIC_ORDER],
+                }).set_index("Metric")
+                st.dataframe(
+                    metrics_df.style.format("{:.4f}").background_gradient(cmap=CMAP),
+                    use_container_width=False,
+                    column_config={"Value": st.column_config.NumberColumn(width="small")},
+                )
+
+            with info_col:
+                with st.container(border=True):
+                    for m in METRIC_ORDER:
+                        st.write(f"**{m}** - {METRIC_INFO[m]}")
 
             st.divider()
 
