@@ -110,10 +110,10 @@ streamlit run app.py
 
 ## BITS Virtual Lab Execution
 
-Ran `train.py` on the BITS Virtual Lab (Prayogshala), got all 5 models trained there and the started the app:
+Ran `train.py` on the BITS Virtual Lab (Prayogshala), got all 5 models trained there, and then started the app:
 
 ![Training run on BITS Virtual Lab](bits-virtual-lab-screenshots/bits-virtual-lab-terminal-run.png)
 
-App in browser once started, uploaded `tes_data.csv` for `Logistic Regression` and result:
+App in the browser once it started, uploaded `test_data.csv`, picked `Logistic Regression`, and here's the result:
 
 ![App running on BITS Virtual Lab](bits-virtual-lab-screenshots/bits-virtual-lab-app-screenshot.png)
