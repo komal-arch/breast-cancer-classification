@@ -1,10 +1,8 @@
-"""
-Trains 5 classification models on the Breast Cancer Wisconsin dataset and
-saves the models, the test data, and a metrics table for the Streamlit app.
-
-Dataset: sklearn.datasets.load_breast_cancer
-569 rows, 30 numeric features, binary target (malignant=0, benign=1)
-"""
+# Trains all 5 models on the Breast Cancer Wisconsin dataset, then saves the
+# models, the test data, and a metrics table so the Streamlit app can use them.
+#
+# Dataset: sklearn.datasets.load_breast_cancer
+# 569 rows, 30 numeric features, binary target (malignant=0, benign=1)
 import json
 import joblib
 import numpy as np

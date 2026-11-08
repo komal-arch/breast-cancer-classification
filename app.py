@@ -22,6 +22,11 @@ CMAP = "Blues"
 
 st.set_page_config(page_title="Breast Cancer Classifier", layout="wide")
 
+st.markdown(
+    "<style>.block-container { padding-left: 4rem; padding-right: 4rem; }</style>",
+    unsafe_allow_html=True,
+)
+
 
 @st.cache_resource
 def load_meta():
@@ -56,7 +61,7 @@ rows_html = "".join(
     for field, value in info_rows
 )
 st.markdown(
-    f"<table style='width:420px; max-width:100%; margin:8px 24px; "
+    f"<table style='width:420px; max-width:100%; margin:8px 0; "
     f"border-collapse:collapse; font-size:14px;'>{rows_html}</table>",
     unsafe_allow_html=True,
 )
